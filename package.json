@@ -4,12 +4,13 @@
   "description": "A Simple node js service listening for data from the plant monitor",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "nodejs index.js",
+    "test": "nodejs tests/serverTest.js"
   },
   "dependencies": {
    },
   "engines": {
-    "node": "0.12.7"
+    "nodejs": "0.10.25"
   },
   "repository": {
     "type": "git",
