@@ -1,28 +1,40 @@
-var server = require('../lib/server');
+var server = require('../lib/server'),
+	assert = require('assert'),
+	http = require('http'),
+	pm = require("../lib/plantmonitor-esp.js");
 
-describe('server', function() {
+var ssl = {
+	'active': false,
+	'key': '../keys/key',
+	'cert': '../keys/certificate'
+};
+
+var port = 3000;
+var settings = { 'port': port, 'ssl': ssl };
+var conn = "";
+
+describe('httpServer /', function() {
+	
 	before(function() {
-		server.listen(3000);
+		console.info("Starting Test Server");
+		console.info(pm.plantMonitorCallback);
+		conn = server.create(settings, pm.plantMonitor, pm.plantMonitorCallback);
 	});
 
 	after(function() {
-		server.close();
+		console.info("Killing Test Server");
+		conn.close();
 	});
-});	
 
-var assert = require('assert'),
-	http = require('http');
-
-describe('/', function() {
 	it('should return 200', function(done) {
-		http.get('http://localhost:3000', function(res) {
-			assert.equal(200, statusCode);
+		http.get('http://localhost:' + port + '/', function(res) {
+			assert.equal(200, res.statusCode);
 			done();
 		});
 	});
 
 	it('should say \'Boink\'', function(done) {
-		http.get('http://localhost:3000', function(res) {
+		http.get('http://localhost:' + port, function(res) {
 			var data = '';
 
 			res.on('data', function(chunk) {
