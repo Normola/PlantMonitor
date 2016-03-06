@@ -4,8 +4,8 @@
   "description": "A Simple node js service listening for data from the plant monitor",
   "main": "index.js",
   "scripts": {
-    "start": "nodejs index.js",
-    "test": "nodejs tests/serverTest.js"
+    "start": "node index.js",
+    "test": "node tests/serverTest.js"
   },
   "dependencies": {
     "os-homedir": "~1.0.1",
