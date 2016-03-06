@@ -1,41 +1,54 @@
-// var server = require('./lib/server.js');
-// var fs = require('fs');
+var fs 			= require('fs'),
+	express		= require('express'),
+	osHomedir 	= require('os-homedir'),
+	helmet 		= require('helmet'),
+	https 		= require('https'),
+	bodyParser	= require('body-parser');
 
-// var ssl = {
-// 	'active': true,
-// 	'key': '../keys/key',
-// 	'cert': '../keys/certificate'
-// };
+var keyDir 	= osHomedir() + '/Dev/keys/';
+var app 	= express();
 
-// var settings = { 'ssl': ssl };
 
-// server.create
-// //console.log(server);
-// //setup(ssl);
-// //server.setup(ssl);
+app.use(helmet());
+app.disable('x-powered-by');
+app.use(bodyParser.urlencoded({ extended: true}));
+app.use(bodyParser.json());
 
-// //var fs = require('fs');
+var router = express.Router();
 
-// // function setup(ssl) {
-// // 	if (ssl && ssl.active) {
-// // 		return {
-// // 			key : fs.readFile(ssl.key),
-// // 			cert : fs.readFile(ssl.certificate)
-// // 		};
-// // 	}
-// // }
+router.get('/', function(req, res) {
+	res.json({ message: 'API router is working.'});
+});
 
-// // function start(app, options) {
-// // 	if (options) {
-// // 		return require('https').createServer(options, app);
-// // 	}
+app.use('/api', router);
 
-// // 	return require('http').createServer(app);
-// // }
+// #TODO: Drive these in a different way. 
+var options = {
+	key: keyDir + 'server-key.pem',
+	cert: keyDir + 'server-crt.pem',
+	ca: keyDir + 'ca-crt.pem',
+	requestCert: true,
+	rejectUnauthorized: false,
+	port: 3000
+};
 
-// // module.exports = {
-// // 	create: function (settings, app, cb) {
-// // 		var options = setup(settings.ssl);
-// // 		return start(app, options).listen(settings.port, cb);
-// // 	}
-// // }
+ssl = {
+		key : fs.readFileSync(options.key),
+		cert : fs.readFileSync(options.cert),
+		ca: fs.readFileSync(options.ca),
+		requestCert: options.requestCert,
+		rejectUnauthorized: options.rejectUnauthorized
+	};
+
+https.createServer(ssl, app).listen(options.port);
+
+// app.get('/', function(req, res) {
+// 	if (req.client.authorized){
+// 		console.log("Yay!");
+// 		res.send("Test");
+// 	}
+// 	else {
+// 		console.log("Rejected.");
+// 		res.send("Not Authed");
+// 	}
+// });
