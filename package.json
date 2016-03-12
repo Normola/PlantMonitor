@@ -7,6 +7,10 @@
   },
   "dependencies": {
     "helmet": "^0.14.0"
-  }
+  },
+  "devDependencies": {
+  },
+  "repository": {
+  },
   "description": "plantmonitor-esp"
 }
