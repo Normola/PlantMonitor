@@ -31,8 +31,9 @@ server.start((err) => {
 	console.log('Server is running at: ' + server.info.uri);
 });
 
-server.register(inert, httpsRedir, (err) => {
+server.register([inert, httpsRedir], (err) => {
 	if (err) {
+		console.error("Failed to load plugin", err);
 		throw err;
 	}
 });
@@ -68,7 +69,6 @@ server.route({
 	path: '/headers',
 	handler: function(request, reply) {
 		reply("Headers: </br><quote>" + JSON.stringify(request.headers) + "</quote>");
-		console.log(request.headers);
 	}
 })
 
