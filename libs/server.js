@@ -1,8 +1,9 @@
 'use strict'
 
-const hapi = require('hapi');
-const inert = require('inert')
-const fs = require('fs');
+const hapi 			= require('hapi');
+const inert 		= require('inert')
+const httpsRedir 	= require('./httpsRedir.js')
+const fs 			= require('fs');
 
 const port = process.env.PORT || 3000;
 const host = process.env.HOST || "0.0.0.0"
@@ -30,6 +31,12 @@ server.start((err) => {
 	console.log('Server is running at: ' + server.info.uri);
 });
 
+server.register(inert, httpsRedir, (err) => {
+	if (err) {
+		throw err;
+	}
+});
+
 
 server.route({
 	method: 'GET',
@@ -47,18 +54,13 @@ server.route({
 	}
 });
 
-server.register(inert, (err) => {
-	if (err) {
-		throw err;
-	}
 
-	server.route({
-		method: 'GET',
-		path: '/hello',
-		handler: function(request, reply) {
-			reply.file('./public/hello.html');
-		}
-	})
+server.route({
+	method: 'GET',
+	path: '/hello',
+	handler: function(request, reply) {
+		reply.file('./public/hello.html');
+	}
 });
 
 module.exports = {
