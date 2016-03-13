@@ -8,8 +8,8 @@ var config = {
 	host: 'localhost',
 	https: {
 		port: '3000',	
-		key: fs.readFile('/home/jim/Dev/keys/server-key.pem'),
-		cert: fs.readFile('/home/jim/Dev/keys/server-cert.pem')
+		//key: fs.readFile('/home/jim/Dev/keys/server-key.pem'),
+		//cert: fs.readFile('/home/jim/Dev/keys/server-cert.pem')
 	}
 };
 
