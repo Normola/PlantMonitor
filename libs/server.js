@@ -19,10 +19,10 @@ const server = new hapi.Server();
 server.connection({
 	host: config.host,
 	port: config.https.port,
-	tls: {
-		key: config.https.key,
-		cert: config.https.cert
-	}
+	// tls: {
+	// 	key: config.https.key,
+	// 	cert: config.https.cert
+	// }
 });
 
 server.start((err) => {
