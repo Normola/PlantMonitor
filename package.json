@@ -3,12 +3,19 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node ."
+    "start": "node .",
+    "test": "mocha"
   },
   "dependencies": {
-    "helmet": "^0.14.0"
+    "hapi": "^13.2.1",
+    "helmet": "^0.14.0",
+    "inert": "^3.2.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^2.4.5",
+    "request": "^2.69.0"
+  },
   "repository": {},
   "description": "plantmonitor-esp"
 }
