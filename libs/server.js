@@ -67,7 +67,8 @@ server.route({
 	method: 'GET',
 	path: '/headers',
 	handler: function(request, reply) {
-		reply("Headers: </br>" + request.headers);
+		reply("Headers: </br><quote>" + JSON.stringify(request.headers) + "</quote>");
+		console.log(request.headers);
 	}
 })
 
