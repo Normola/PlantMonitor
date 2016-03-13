@@ -4,10 +4,11 @@ const hapi = require('hapi');
 const inert = require('inert')
 const fs = require('fs');
 
+const port = process.env.PORT || 3000;
 var config = {
 	host: 'localhost',
 	https: {
-		port: '3000',	
+		port: port,	
 		//key: fs.readFile('/home/jim/Dev/keys/server-key.pem'),
 		//cert: fs.readFile('/home/jim/Dev/keys/server-cert.pem')
 	}
