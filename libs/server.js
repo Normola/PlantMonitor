@@ -5,12 +5,11 @@ const inert = require('inert')
 const fs = require('fs');
 
 const port = process.env.PORT || 3000;
+const host = process.env.HOST || "0.0.0.0"
 var config = {
-	host: 'localhost',
+	host: host,
 	https: {
-		port: port,	
-		//key: fs.readFile('/home/jim/Dev/keys/server-key.pem'),
-		//cert: fs.readFile('/home/jim/Dev/keys/server-cert.pem')
+		port: port
 	}
 };
 
@@ -19,11 +18,7 @@ const server = new hapi.Server();
 
 server.connection({
 	host: config.host,
-	port: config.https.port,
-	// tls: {
-	// 	key: config.https.key,
-	// 	cert: config.https.cert
-	// }
+	port: config.https.port
 });
 
 server.start((err) => {
