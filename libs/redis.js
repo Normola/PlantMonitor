@@ -1,17 +1,23 @@
 'use strict'
 
-const config = {
-	REDISURL: getEnv('REDISURL'),
-	PORT: getEnv('PORT'),
+var redis = require('redis');
+var url 	= require('url');
 
+const config = {
+	hostname: getEnv('REDISURL') | 'localhost',
+	port: getEnv('PORT') | '6379',
 };
 
-function getEnv(name){
-	var returnEnv = process.env[name];
-	if (process.env[name] == undefined)
-	{
-		returnEnv = "";
-	}
+var client = redis.createClient(config.port, config.hostname);
 
-	return returnEnv;
+if (config.auth != null) {
+	client.auth(config.auth.split(':')[1]);
 }
+
+client.on('error', function(err) {
+	console.log(err);
+});
+
+module.exports = {
+	client
+};
