@@ -7,7 +7,7 @@ const fs = require('fs');
 var config = {
 	host: 'localhost',
 	https: {
-		port: '80',	
+		port: '3000',	
 		//key: fs.readFile('/home/jim/Dev/keys/server-key.pem'),
 		//cert: fs.readFile('/home/jim/Dev/keys/server-cert.pem')
 	}
