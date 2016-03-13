@@ -31,7 +31,7 @@ server.start((err) => {
 	console.log('Server is running at: ' + server.info.uri);
 });
 
-server.register([inert, httpsRedir], (err) => {
+server.register([require('inert'), require('./httpsRedir').register], (err) => {
 	if (err) {
 		console.error("Failed to load plugin", err);
 		throw err;
