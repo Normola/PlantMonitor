@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "hapi": "^13.2.1",
+    "hapi-auth-bearer-simple": "^4.0.1",
     "helmet": "^0.14.0",
     "inert": "^3.2.0"
   },
@@ -19,6 +20,6 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/normola/plantmonitor-esp"
-    },
+  },
   "description": "plantmonitor-esp"
 }

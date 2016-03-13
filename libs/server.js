@@ -1,9 +1,12 @@
 'use strict'
 
-const hapi 			= require('hapi');
-const inert 		= require('inert')
-const httpsRedir 	= require('./httpsRedir.js')
-const fs 			= require('fs');
+const hapi 				= require('hapi');
+const inert 			= require('inert');
+const httpsRedir 		= require('./httpsRedir.js');
+const authBearer 		= require('hapi-auth-bearer-simple');
+const fs 				= require('fs');
+const authValidation	= require('./auth').validateFunction;
+
 
 const port = process.env.PORT || 3000;
 const host = process.env.HOST || "0.0.0.0"
@@ -31,11 +34,38 @@ server.start((err) => {
 	console.log('Server is running at: ' + server.info.uri);
 });
 
-server.register([require('inert'), require('./httpsRedir').register], (err) => {
+server.register([inert, httpsRedir, authBearer], (err) => {
 	if (err) {
 		console.error("Failed to load plugin", err);
 		throw err;
 	}
+
+	server.auth.strategy('bearer', 'bearerAuth', {
+		validateFunction: authValidation
+	});
+
+	server.route({
+		method: 'GET',
+		path: '/auth',
+		handler: function(request, reply) {
+			reply({success: true });
+		},
+		config: {
+			auth: {
+				strategy: 'bearer',
+				scope: 'admin'
+			}
+		}
+	});
+
+	server.route({
+		method: 'GET',
+		path: '/hello',
+		handler: function(request, reply) {
+			reply.file('./public/hello.html');
+	}
+});
+
 });
 
 
@@ -44,6 +74,11 @@ server.route({
 	path: '/',
 	handler: function (request, reply) {
 		reply('Boink!');
+	},
+	config: {
+		auth: {
+			strategy: 'bearer'
+		}
 	}
 });
 
@@ -52,15 +87,12 @@ server.route({
 	path: '/{name}',
 	handler: function(request, reply) {
 		reply('Boink - ' + encodeURIComponent(request.params.name) + '!')
-	}
-});
-
-
-server.route({
-	method: 'GET',
-	path: '/hello',
-	handler: function(request, reply) {
-		reply.file('./public/hello.html');
+	},
+	config: {
+		auth: {
+			strategy: 'bearer',
+			scope: 'admin'
+		}
 	}
 });
 
@@ -69,6 +101,12 @@ server.route({
 	path: '/headers',
 	handler: function(request, reply) {
 		reply("Headers: </br><quote>" + JSON.stringify(request.headers) + "</quote>");
+	},
+	config: {
+		auth: {
+			strategy: 'bearer',
+			scope: 'admin'
+		}
 	}
 })
 
