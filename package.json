@@ -10,7 +10,8 @@
     "hapi": "^13.2.1",
     "hapi-auth-bearer-simple": "^4.0.1",
     "helmet": "^0.14.0",
-    "inert": "^3.2.0"
+    "inert": "^3.2.0",
+    "q": "^1.4.1"
   },
   "devDependencies": {
     "chai": "^3.5.0",
