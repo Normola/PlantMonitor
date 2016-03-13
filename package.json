@@ -16,6 +16,7 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "mocha": "^2.4.5",
+    "fakeredis": "^1.0.2",
     "request": "^2.69.0"
   },
   "repository": {
