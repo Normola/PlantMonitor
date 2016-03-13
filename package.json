@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node .",
+    "start": "node index.js",
     "test": "mocha"
   },
   "dependencies": {
@@ -16,6 +16,9 @@
     "mocha": "^2.4.5",
     "request": "^2.69.0"
   },
-  "repository": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/normola/plantmonitor-esp"
+    },
   "description": "plantmonitor-esp"
 }
