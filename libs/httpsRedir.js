@@ -6,9 +6,9 @@ exports .register = function (server, options, next) {
 
 	server.ext('onRequest', function (request, reply) {
 		if (request.headers['x-forwarded-proto'] == 'http') {
-			console.log(url.parse(request.url).pathname);
+			var path = url.parse(request.url).pathname;
 			return reply()
-				.redirect('https://' + request.headers.host + request.uri.path)
+				.redirect('https://' + request.headers.host + path)
 				.code(301);
 		}
 		reply.continue();
