@@ -63,6 +63,14 @@ server.route({
 	}
 });
 
+server.route({
+	method: 'GET',
+	path: '/headers',
+	handler: function(request, reply) {
+		reply("Headers: </br>" + request.headers);
+	}
+})
+
 module.exports = {
 	server
 };
