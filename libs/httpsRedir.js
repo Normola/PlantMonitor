@@ -1,10 +1,12 @@
 'use strict'
 
+var url = require("url");
+
 exports .register = function (server, options, next) {
 
 	server.ext('onRequest', function (request, reply) {
 		if (request.headers['x-forwarded-proto'] == 'http') {
-			console.log(JSON.stringify(request));
+			console.log(url.parse(request.url).pathname);
 			return reply()
 				.redirect('https://' + request.headers.host + request.uri.path)
 				.code(301);
