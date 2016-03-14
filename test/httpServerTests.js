@@ -1,7 +1,6 @@
-
-var assert 	= require('chai').assert;
-var expect	= require("chai").expect;
-var request = require("request");
+var assert 	= require('chai').assert,
+    expect	= require('chai').expect,
+    request = require('request');
 
 var server 	= require('../libs/server.js');
 

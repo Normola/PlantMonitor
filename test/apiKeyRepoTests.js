@@ -1,6 +1,7 @@
-var assert  = require('assert'),
-    client  = require('fakeredis'),
-    repo    = require('../data/repository');
+var assert 	= require('chai').assert,
+    expect	= require('chai').expect,
+    client  = require('fakeredis').createClient('test'),
+    repo    = require('../libs/apiKeyPromises');
 
 describe('Repository Test', function() {
   beforeEach(function(){
@@ -10,12 +11,12 @@ describe('Repository Test', function() {
     client.flushdb();
   });
 
-  if('addAPIKey should add an API key', function(done) {
+  it('addAPIKey should add an API key', function(done) {
     var key ='12345abcde'
-    var keyCheck = repo.addAPIKey(key, 0);
+    var keyCheck = repo.addAPIKey(key, 3600, client);
     keyCheck.done(function(){
       client.get('api:keys:' + key, function(err, data){
-        assert.equal(data, key);
+        expect(key).to.equal(data);
         done();
       });
     });
