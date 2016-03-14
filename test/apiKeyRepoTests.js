@@ -81,6 +81,7 @@ describe('Repository Test', function() {
         var checkKey = repo.checkAPIKeyExists(key, client);
         checkKey.done(function(data) {
           expect(data).to.equal(false);
+          done();
         });
       });
     });
