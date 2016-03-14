@@ -63,11 +63,14 @@ server.register([inert, httpsRedir, authBearer], (err) => {
 		path: '/hello',
 		handler: function(request, reply) {
 			reply.file('./public/hello.html');
-	}
+		},
+		config: {
+			auth: {
+				strategy: 'bearer'
+			}
+		}
+	});
 });
-
-});
-
 
 server.route({
 	method: 'GET',

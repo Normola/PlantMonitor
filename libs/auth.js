@@ -5,12 +5,9 @@ var validateFunction = function (token, callback) {
         //callback(null, true, userCredentials);
         var userCredentials =  {credentials: { user: 'admin' }};
         callback(null, true, userCredentials);
-        
-        console.log("Yay!");
     }
     else {
         callback(null, false, null);
-        console.log("Boo :(");
     }
 };
 
