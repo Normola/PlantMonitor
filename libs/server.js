@@ -2,7 +2,7 @@
 
 const hapi 				= require('hapi');
 const inert 			= require('inert');
-const httpsRedir 		= require('./httpsRedir.js');
+const httpsRedir 		= require('./hapiHttpsRedirPlugin.js');
 const authBearer 		= require('hapi-auth-bearer-simple');
 const fs 				= require('fs');
 const authValidation	= require('./auth').validateFunction;
