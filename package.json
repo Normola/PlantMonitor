@@ -7,6 +7,8 @@
     "test": "mocha"
   },
   "dependencies": {
+    "base64url": "^1.0.6",
+    "crypto": "0.0.3",
     "hapi": "^13.2.1",
     "hapi-auth-bearer-simple": "^4.0.1",
     "helmet": "^0.14.0",

@@ -6,9 +6,9 @@ var area = 'api';
 function addAPIKey(key, expire, client) {
   return q.Promise(function(resolve, reject, notify) {
     client.multi()
-      .setex(area + ':keys:' + key, expire, key)
-      .sadd(area + ':keys:' + area + ':keys:' + key)
-      .expire(area + ':keys', expire)
+      .setex('api:keys:' + key, expire, key)
+      .sadd('api:keys', 'api:keys:' + key)
+      .expire('api:keys', expire)
       .exec(function(err) {
         if (err){
           reject(err);
@@ -20,23 +20,23 @@ function addAPIKey(key, expire, client) {
   });
 }
 
-function checkAPIKey(checkKey, client) {
+function checkAPIKeyExists(checkKey, client) {
   return q.Promise(function(resolve, reject, notify) {
-    client.get(checkKey + ':keys', function(err, key) {
+    client.get('api:keys:'+ checkKey, function(err, key) {
       if (err) {
         reject(err);
       }
-      if(key == null) {
-        reject('Key is null');
+      if (key==null) {
+        resolve(false);
       }
-      resolve( { fs: JSON.parse(key) } );
+      resolve( true );
     });
   });
 }
 
-function deleteAPIKey(key) {
+function deleteAPIKey(key, client) {
   return q.Promise(function(resolve, reject, notify) {
-    client.srem(area + ':keys', area + ':keys:' + key, function(err) {
+    client.srem('api:keys', 'api:keys:' + key, function(err) {
       if (err) {
         reject(err);
       }
@@ -46,7 +46,7 @@ function deleteAPIKey(key) {
 }
 
 module.exports = {
-   checkAPIKey: checkAPIKey,
+   checkAPIKeyExists: checkAPIKeyExists,
    addAPIKey: addAPIKey,
    deleteAPIKey: deleteAPIKey
 
